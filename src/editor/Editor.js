@@ -96,8 +96,9 @@ define(function (require, exports, module) {
         UPPERCASE_COLORS    = "uppercaseColors",
         USE_TAB_CHAR        = "useTabChar",
         WORD_WRAP           = "wordWrap",
-        INDENT_LINE_COMMENT  = "indentLineComment",
-        ALLOW_JAVASCRIPT    = "allowJavaScript";
+        INDENT_LINE_COMMENT = "indentLineComment",
+        ALLOW_JAVASCRIPT    = "allowJavaScript",
+        AUTO_UPDATE         = "autoUpdate";
     
 
     var cmOptions         = {};
@@ -129,6 +130,7 @@ define(function (require, exports, module) {
     cmOptions[USE_TAB_CHAR]       = "indentWithTabs";
     cmOptions[WORD_WRAP]          = "lineWrapping";
     cmOptions[ALLOW_JAVASCRIPT]   = "allowJavaScript";
+    cmOptions[AUTO_UPDATE]        = "autoUpdate";
 
     PreferencesManager.definePreference(CLOSE_BRACKETS,     "boolean", true, {
         description: Strings.DESCRIPTION_CLOSE_BRACKETS
@@ -219,6 +221,10 @@ define(function (require, exports, module) {
 
     PreferencesManager.definePreference(ALLOW_JAVASCRIPT,     "boolean", true, {
         description: Strings.DESCRIPTION_ALLOW_JAVASCRIPT
+    });
+
+    PreferencesManager.defintePreference(AUTO_UPDATE,         "boolean", true, {
+        description: Strings.DESCRIPTION_AUTO_UPDATE
     });
 
 
@@ -411,6 +417,7 @@ define(function (require, exports, module) {
             lineWiseCopyCut             : currentOptions[LINEWISE_COPY_CUT],
             lineWrapping                : currentOptions[WORD_WRAP],
             allowJavaScript             : currentOptions[ALLOW_JAVASCRIPT],
+            autoUpdate                  : currentOptions[AUTO_UPDATE],
             matchBrackets               : { maxScanLineLength: 50000, maxScanLines: 1000 },
             matchTags                   : { bothTags: true },
             scrollPastEnd               : !range && currentOptions[SCROLL_PAST_END],
@@ -2573,6 +2580,27 @@ define(function (require, exports, module) {
 
     Editor.getAllowJavaScript = function (fullPath) {
         return PreferencesManager.get(ALLOW_JAVASCRIPT, _buildPreferencesContext(fullPath));
+    };
+
+    /**
+     * Sets auto update option.
+     * Affects any editors that share the same preference location.
+     * @param {boolean} value
+     * @param {string=} fullPath Path to file to get preference for
+     * @return {boolean} true if value was valid
+     */
+    Editor.setAutoUpdate = function (value, fullPath) {
+        var options = fullPath && {context: fullPath};
+        return PreferencesManager.set(AUTO_UPDATE, value, options);
+    };
+
+    /**
+     * Returns true if auto update is enabled for the specified or current file
+     * @param {string=} fullPath Path to file to get preference for
+     * @return {boolean}
+     */
+    Editor.getAutoUpdate = function (fullPath) {
+        return PreferencesManager.get(AUTO_UPDATE, _buildPreferencesContext(fullPath));
     };
 
     /**
