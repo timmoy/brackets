@@ -223,7 +223,7 @@ define(function (require, exports, module) {
         description: Strings.DESCRIPTION_ALLOW_JAVASCRIPT
     });
 
-    PreferencesManager.defintePreference(AUTO_UPDATE,         "boolean", true, {
+    PreferencesManager.definePreference(AUTO_UPDATE,         "boolean", true, {
         description: Strings.DESCRIPTION_AUTO_UPDATE
     });
 
