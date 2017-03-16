@@ -106,3 +106,10 @@
 #selfie-video-bg.on {
     opacity: 1;
 }
+
++#filter-list {
++    display: inline-block;
++    float: left;
++    margin-top: 10px;
++    margin-left: 10px;
++}
