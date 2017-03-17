@@ -90,33 +90,23 @@ define(function (require, exports, module) {
             }
 
             var binaryDataStr;
-            if(img.src){
-              console.log("copy of image is here");
-              Caman(img, function () {
-                this.brightness(5);
+            if(filtered == true){
+              console.log("the image is detected to be filtered");
+              Caman("#canvas", function () { //canvas reference here
+                this.brightness(10);
                 this.render(function () {
-                  this.save(img.src+".png");
+                  var image = this.toBase64();
+                  binaryDataStr = /^data:image\/png;base64,(.+)/.exec(image)[1];
+                  self.camera.savePhoto(base64ToBuffer(binaryDataStr));
                 });
               });
-              binaryDataStr = /^data:image\/png;base64,(.+)/.exec(img.src+".png")[1];
               console.log("alternate saved");
             }else{
               binaryDataStr = /^data:image\/png;base64,(.+)/.exec(data)[1];
+              self.camera.savePhoto(base64ToBuffer(binaryDataStr));
+              console.log("original saved");
             }
-
-            self.camera.savePhoto(base64ToBuffer(binaryDataStr));
         }
-
-        /*function updateFilter(){
-        +      var select = document.getElementById("filters-select");
-        +      if(select.options[select.selectedIndex].value != "none"){
-        +        //alert(select.options[select.selectedIndex].value + " filter applied");
-        +        document.getElementById("selfie-photo").className = "polaroid " + select.options[select.selectedIndex].value;
-        +      }else{
-        +        document.getElementById("selfie-photo").className = "polaroid";
-        +      }
-        +    }*/
-
 
         var context = this.canvas.interface.getContext("2d");
         this.canvas.interface.width = _width;
@@ -126,58 +116,49 @@ define(function (require, exports, module) {
         // Update the photo component with the snapped photo
         this.photo.update();
 
-        //pattern from http://tutorialzine.com/2013/02/instagram-filter-app/
+        //pattern from http://codepen.io/SitePoint/full/LVpNjp/
         //$(function() {
 
-          //var Caman = require('caman').Caman;
-          var canvas = document.getElementById("canvas");
-          var ctx = canvas.getContext('2d');
+        //var Caman = require('caman').Caman;
+        var canvas = document.getElementById("canvas");  //canvas reference here
+        var ctx = canvas.getContext('2d');
 
-          /* Enable Cross Origin Image Editing */
-          var img = new Image();
-          img.crossOrigin = '';
-          img.src = self.photo.data;
-          console.log("img width: "+ img.width + " height " + img.height + "source: " + img.src);
+        /* Enable Cross Origin Image Editing */
+        var img = new Image();
+        img.crossOrigin = '';
+        img.src = self.photo.data;
+        console.log("img width: "+ img.width + " height " + img.height + "source: " + img.src);
+        console.log("save path in camera is: " + self.camera.savePath);
 
-          img.onload = function() {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            console.log("loaded width: "+ img.width + " height " + img.height);
-            ctx.drawImage(img, 0, 0, img.width, img.height);
-          }
+        img.onload = function() {
+          canvas.width = img.width/2;
+          canvas.height = img.height/2;
+          console.log("loaded width: "+ img.width + " height " + img.height);
+          ctx.drawImage(img, 0, 0, img.width/2, img.height/2);
+        }
 
-          var $reset = $('#resetbtn');
-          var $pinhole = $('#pinholebtn');
-          $reset.on('click', function(e) {
-            $('input[type=range]').val(0);
-            Caman('#canvas', img, function() {
-              this.revert(false);
-              this.render();
-              console.log("reset");
-            });
+        var filtered = false;
+        var $reset = $('#resetbtn');
+        var $pinhole = $('#pinholebtn');
+        $reset.on('click', function(e) {
+          $('input[type=range]').val(0);
+          Caman('#canvas', img, function() { //canvas reference here
+            this.revert(false);
+            this.render();
+            filtered = false;
+            console.log("reset");
           });
+        });
 
-          /* In built filters */
-          $pinhole.on('click', function(e) {
-            Caman('#canvas', img, function() {
-              this.pinhole().render();
-              console.log("filtered");
-            });
+        /* Filters */
+        $pinhole.on('click', function(e) {
+          Caman('#canvas', img, function() { //canvas reference here
+            this.pinhole().render();
+            filtered = true;
+            console.log("filtered");
           });
+        });
 
-          // Listen for clicks on the filters
-
-          /*filters.click(function(e){
-            console.log("clicked");
-
-            Caman("#selfie-canvas", function () {
-              this.invert();
-              console.log("inverted");
-              this.render();
-              console.log("rendered");
-            });
-          });//end of click*/
-        //});
         //end of pattern
 
         this.saveButton.removeEventListener("click", persistPhoto);
