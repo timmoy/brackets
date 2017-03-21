@@ -10,7 +10,7 @@
 
 #selfie-widget {
     min-width: 580px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .emphasis {
@@ -107,9 +107,27 @@
     opacity: 1;
 }
 
-+#filter-list {
-+    display: inline-block;
-+    float: left;
-+    margin-top: 10px;
-+    margin-left: 10px;
-+}
+#filter-list {
+    display: inline-block;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#canvas{
+  position: relative;
+  display: inline-block;
+  width: 320px;
+}
+
+#canvas img {
+    border: 10px solid #fff;
+    border-bottom: 45px solid #fff;
+    -webkit-box-shadow: 3px 3px 3px #777;
+    -moz-box-shadow: 3px 3px 3px #777;
+    box-shadow: 3px 3px 3px #777;
+    width: 320px;
+    height: 240px;
+    display: inline-block;
+    background-image: url("./selfiePreview.png");
+}

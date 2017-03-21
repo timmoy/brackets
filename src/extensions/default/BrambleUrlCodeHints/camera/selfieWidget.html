@@ -8,18 +8,29 @@
     </div>
     <div id="selfie-gallery">
         <div class="polaroid">
+        <!--<div>-->
             <img id="selfie-photo" />
         </div>
+
+    </div>
+    <div>
+      <canvas id="canvas"></canvas>
     </div>
     <div id="filter-list">
-      <nav>
-        <button id="resetbtn" class="btn btn-success">Reset Photo</button>
-        <button id="pinholebtn" class="btn btn-primary">Pin Hole</button>
-      </nav>
+        <nav>
+          <button id="resetbtn" class="btn btn-success">Reset Photo</button>
+          <button id="pinholebtn" value="pinhole" class="btn btn-primary">Pin Hole</button>
+          <button id="sepiabtn" value="sepia" class="btn btn-primary">Sepia</button>
+          <button id="contrastbtn" value="contrast" class="btn btn-primary">Contrast</button>
+        </nav>
+        <br/>
+        <nav>
+          <button id="vintagebtn" value="vintage" class="btn btn-primary">Vintage</button>
+          <button id="sunrisebtn" value="sunrise" class="btn btn-primary">Sun Rise</button>
+          <button id="glowingsunbtn" value="glowingSun" class="btn btn-primary">Glow Sun</button>
+          <button id="embossbtn" value="emboss" class="btn btn-primary">Emboss</button>
+        </nav>
     </div>
-</div>
-<div>
-  <canvas id="canvas"></canvas>
 </div>
 <script type="text/javascript" src="/node_modules/caman/dist/caman.full.min.js"></script>
 <canvas id="selfie-canvas"></canvas>

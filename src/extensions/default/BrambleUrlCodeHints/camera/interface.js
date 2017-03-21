@@ -131,16 +131,14 @@ define(function (require, exports, module) {
         console.log("save path in camera is: " + self.camera.savePath);
 
         img.onload = function() {
-          canvas.width = img.width/2;
-          canvas.height = img.height/2;
+          canvas.width = img.width;
+          canvas.height = img.height;
           console.log("loaded width: "+ img.width + " height " + img.height);
-          ctx.drawImage(img, 0, 0, img.width/2, img.height/2);
+          ctx.drawImage(img, 0, 0, img.width, img.height);
         }
 
         var filtered = false;
-        var $reset = $('#resetbtn');
-        var $pinhole = $('#pinholebtn');
-        $reset.on('click', function(e) {
+        $('#resetbtn').on('click', function(e) {
           $('input[type=range]').val(0);
           Caman('#canvas', img, function() { //canvas reference here
             this.revert(false);
@@ -149,13 +147,54 @@ define(function (require, exports, module) {
             console.log("reset");
           });
         });
-
         /* Filters */
-        $pinhole.on('click', function(e) {
+        $('#pinholebtn').on('click', function(e) {
           Caman('#canvas', img, function() { //canvas reference here
             this.pinhole().render();
             filtered = true;
-            console.log("filtered");
+            console.log("filtered: pinhole");
+          });
+        });
+        $('#contrastbtn').on('click', function(e) {
+          Caman('#canvas', img, function() {
+            this.contrast(10).render();
+            filtered = true;
+            console.log("filtered: contrast");
+          });
+        });
+        $('#sepiabtn').on('click', function(e) {
+          Caman('#canvas', img, function() {
+            this.sepia(20).render();
+            filtered = true;
+            console.log("filtered: sepia");
+          });
+        });
+        $('#vintagebtn').on('click', function(e) {
+          Caman('#canvas', img, function() {
+            this.vintage().render();
+            filtered = true;
+            console.log("filtered: vintage");
+          });
+        });
+        $('#embossbtn').on('click', function(e) {
+          Caman('#canvas', img, function() {
+            this.emboss().render();
+            filtered = true;
+            console.log("filtered: emboss");
+          });
+        });
+        $('#sunrisebtn').on('click', function(e) {
+          Caman('#canvas', img, function() {
+            this.sunrise().render();
+            filtered = true;
+            console.log("filtered: sunrise");
+          });
+        });
+        $('#glowingsunbtn').on('click', function(e) {
+          Caman('#canvas', img, function() {
+            this.glowingSun().render();
+            filtered = true;
+            console.log("filtered: glowing sun");
           });
         });
 
