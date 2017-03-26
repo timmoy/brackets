@@ -147,7 +147,7 @@ define(function (require, exports, module) {
           var $emboss = $('#embossbtn');
           var $sunrise = $('#sunrisebtn');
           var $glowingSun = $('#glowingsunbtn');
-          $('#resetbtn').on('click', function(e) {
+          $reset.on('click', function(e) {
             $('input[type=range]').val(0);
             Caman('#canvas', img, function() { // canvas reference here
               this.revert(false);
