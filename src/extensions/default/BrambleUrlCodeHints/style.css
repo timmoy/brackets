@@ -10,6 +10,7 @@
 
 #selfie-widget {
     min-width: 580px;
+    min-height: 700px;
     overflow: auto;
 }
 
@@ -118,16 +119,4 @@
   position: relative;
   display: inline-block;
   width: 320px;
-}
-
-#canvas img {
-    border: 10px solid #fff;
-    border-bottom: 45px solid #fff;
-    -webkit-box-shadow: 3px 3px 3px #777;
-    -moz-box-shadow: 3px 3px 3px #777;
-    box-shadow: 3px 3px 3px #777;
-    width: 320px;
-    height: 240px;
-    display: inline-block;
-    background-image: url("./selfiePreview.png");
 }

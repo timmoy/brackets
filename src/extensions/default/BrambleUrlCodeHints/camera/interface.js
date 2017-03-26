@@ -90,7 +90,7 @@ define(function (require, exports, module) {
             }
 
             var binaryDataStr;
-            if(filtered == true){
+            if(filtered == true){  //added extra '=' for travis error
               console.log("the image is detected to be filtered");
               Caman("#canvas", function () { //canvas reference here
                 this.brightness(10);
@@ -116,87 +116,95 @@ define(function (require, exports, module) {
         // Update the photo component with the snapped photo
         this.photo.update();
 
-        //pattern from http://codepen.io/SitePoint/full/LVpNjp/
-        //$(function() {
+        // pattern from http://codepen.io/SitePoint/full/LVpNjp/
+        // $(function() {
 
-        //var Caman = require('caman').Caman;
-        var canvas = document.getElementById("canvas");  //canvas reference here
-        var ctx = canvas.getContext('2d');
+          //var Caman = require('caman').Caman;
+          var canvas = document.getElementById("canvas");  // canvas reference here
+          var ctx = canvas.getContext('2d');
 
-        /* Enable Cross Origin Image Editing */
-        var img = new Image();
-        img.crossOrigin = '';
-        img.src = self.photo.data;
-        console.log("img width: "+ img.width + " height " + img.height + "source: " + img.src);
-        console.log("save path in camera is: " + self.camera.savePath);
+          /* Enable Cross Origin Image Editing */
+          var img = new Image();
+          img.crossOrigin = '';
+          img.src = self.photo.data;
+          console.log("img width: "+ img.width + " height " + img.height + "source: " + img.src);
+          console.log("save path in camera is: " + self.camera.savePath);
 
-        img.onload = function() {
-          canvas.width = img.width;
-          canvas.height = img.height;
-          console.log("loaded width: "+ img.width + " height " + img.height);
-          ctx.drawImage(img, 0, 0, img.width, img.height);
-        }
+          img.onload = function() {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            console.log("loaded width: " + img.width + " height " + img.height);
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+          }; // added missing semi-colon
 
-        var filtered = false;
-        $('#resetbtn').on('click', function(e) {
-          $('input[type=range]').val(0);
-          Caman('#canvas', img, function() { //canvas reference here
-            this.revert(false);
-            this.render();
-            filtered = false;
-            console.log("reset");
+          var filtered = false;
+          var $reset = $('#resetbtn');
+          var $pinhole = $('#pinholebtn');
+          var $contrast = $('#contrastbtn');
+          var $sepia = $('#sepiabtn');
+          var $vintage = $('#vintagebtn');
+          var $emboss = $('#embossbtn');
+          var $sunrise = $('#sunrisebtn');
+          var $glowingSun = $('#glowingsunbtn')
+          $('#resetbtn').on('click', function(e) {
+            $('input[type=range]').val(0);
+            Caman('#canvas', img, function() { // canvas reference here
+              this.revert(false);
+              this.render();
+              filtered = false;
+              console.log("reset");
+            });
           });
-        });
-        /* Filters */
-        $('#pinholebtn').on('click', function(e) {
-          Caman('#canvas', img, function() { //canvas reference here
-            this.pinhole().render();
-            filtered = true;
-            console.log("filtered: pinhole");
+          /* Filters */
+          $pinhole.on('click', function(e) {
+            Caman('#canvas', img, function() { // canvas reference here
+              this.pinhole().render();
+              filtered = true;
+              console.log("filtered: pinhole");
+            });
           });
-        });
-        $('#contrastbtn').on('click', function(e) {
-          Caman('#canvas', img, function() {
-            this.contrast(10).render();
-            filtered = true;
-            console.log("filtered: contrast");
+          $contrast.on('click', function(e) {
+            Caman('#canvas', img, function() {
+              this.contrast(10).render();
+              filtered = true;
+              console.log("filtered: contrast");
+            });
           });
-        });
-        $('#sepiabtn').on('click', function(e) {
-          Caman('#canvas', img, function() {
-            this.sepia(20).render();
-            filtered = true;
-            console.log("filtered: sepia");
+          $sepia.on('click', function(e) {
+            Caman('#canvas', img, function() {
+              this.sepia(20).render();
+              filtered = true;
+              console.log("filtered: sepia");
+            });
           });
-        });
-        $('#vintagebtn').on('click', function(e) {
-          Caman('#canvas', img, function() {
-            this.vintage().render();
-            filtered = true;
-            console.log("filtered: vintage");
+          $vintage.on('click', function(e) {
+            Caman('#canvas', img, function() {
+              this.vintage().render();
+              filtered = true;
+              console.log("filtered: vintage");
+            });
           });
-        });
-        $('#embossbtn').on('click', function(e) {
-          Caman('#canvas', img, function() {
-            this.emboss().render();
-            filtered = true;
-            console.log("filtered: emboss");
+          $emboss.on('click', function(e) {
+            Caman('#canvas', img, function() {
+              this.emboss().render();
+              filtered = true;
+              console.log("filtered: emboss");
+            });
           });
-        });
-        $('#sunrisebtn').on('click', function(e) {
-          Caman('#canvas', img, function() {
-            this.sunrise().render();
-            filtered = true;
-            console.log("filtered: sunrise");
+          $sunrise.on('click', function(e) {
+            Caman('#canvas', img, function() {
+              this.sunrise().render();
+              filtered = true;
+              console.log("filtered: sunrise");
+            });
           });
-        });
-        $('#glowingsunbtn').on('click', function(e) {
-          Caman('#canvas', img, function() {
-            this.glowingSun().render();
-            filtered = true;
-            console.log("filtered: glowing sun");
+          $glowingSun.on('click', function(e) {
+            Caman('#canvas', img, function() {
+              this.glowingSun().render();
+              filtered = true;
+              console.log("filtered: glowing sun");
+            });
           });
-        });
 
         //end of pattern
 
