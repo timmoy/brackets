@@ -9,6 +9,7 @@ define(function (require, exports, module) {
     var selfieWidgetHTML = require("text!camera/selfieWidget.html");
     var base64ToBuffer = require("camera/utils").base64ToBuffer;
     var shutter;
+    //var Caman = require('../../../../../node_modules/caman/dist/caman.full.min.js');
 
     // We hardcode the width of the video interface for now
     var _width = 320;
@@ -90,7 +91,7 @@ define(function (require, exports, module) {
             }
 
             var binaryDataStr;
-            if(filtered == true){  //added extra '=' for travis error
+            if(filtered === true){  //added extra '=' for travis error
               console.log("the image is detected to be filtered");
               Caman("#canvas", function () { //canvas reference here
                 this.brightness(10);
@@ -145,7 +146,7 @@ define(function (require, exports, module) {
           var $vintage = $('#vintagebtn');
           var $emboss = $('#embossbtn');
           var $sunrise = $('#sunrisebtn');
-          var $glowingSun = $('#glowingsunbtn')
+          var $glowingSun = $('#glowingsunbtn');
           $('#resetbtn').on('click', function(e) {
             $('input[type=range]').val(0);
             Caman('#canvas', img, function() { // canvas reference here
