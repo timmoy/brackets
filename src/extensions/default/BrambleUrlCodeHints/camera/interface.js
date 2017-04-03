@@ -9,7 +9,6 @@ define(function (require, exports, module) {
     var selfieWidgetHTML = require("text!camera/selfieWidget.html");
     var base64ToBuffer = require("camera/utils").base64ToBuffer;
     var shutter;
-    //var Caman = require('../../../../../node_modules/caman/dist/caman.full.min.js');
 
     // We hardcode the width of the video interface for now
     var _width = 320;
@@ -41,7 +40,7 @@ define(function (require, exports, module) {
         // Camera component initialization
         this.video.interface = document.getElementById("selfie-video");
         this.photo.interface = document.getElementById("selfie-photo");
-        this.canvas.interface = document.getElementById("selfie-canvas");
+        //this.canvas.interface = document.getElementById("selfie-canvas");
 
         // Camera buttons
         this.snapButton = document.getElementById("selfie-snap");
@@ -59,8 +58,8 @@ define(function (require, exports, module) {
         this._height = height;
         this.video.interface.setAttribute("height", height);
         this.video.interface.setAttribute("width", _width);
-        this.canvas.interface.setAttribute("height", height);
-        this.canvas.interface.setAttribute("width", _width);
+        //this.canvas.interface.setAttribute("height", height);
+        //this.canvas.interface.setAttribute("width", _width);
     };
 
     // Enable the Snap icon for the camera
@@ -85,46 +84,59 @@ define(function (require, exports, module) {
         var self = this;
 
         function persistPhoto() {
+            /*
+            Since we currently aren't using the original pattern we don't have
+            a photo object with data to pass this check. Bypass for now.
+
             var data = self.photo.data;
             if(!data) {
                 return self.camera.fail();
-            }
+            }*/
 
-            var binaryDataStr;
-            if(filtered === true){  //added extra '=' for travis error
-              console.log("the image is detected to be filtered");
-              Caman("#canvas", function () { //canvas reference here
-                this.brightness(10);
-                this.render(function () {
-                  var image = this.toBase64();
-                  binaryDataStr = /^data:image\/png;base64,(.+)/.exec(image)[1];
-                  self.camera.savePhoto(base64ToBuffer(binaryDataStr));
-                });
-              });
-              console.log("alternate saved");
-            }else{
-              binaryDataStr = /^data:image\/png;base64,(.+)/.exec(data)[1];
-              self.camera.savePhoto(base64ToBuffer(binaryDataStr));
-              console.log("original saved");
-            }
+           console.log("the image is detected to be filtered");
+           Caman(canvas, function () {
+             this.render(function () {
+               var image = this.toBase64();
+               var binaryDataStr = /^data:image\/png;base64,(.+)/.exec(image)[1];
+               self.camera.savePhoto(base64ToBuffer(binaryDataStr));
+               console.log("attributes: " + canvas.width + ", " + canvas.height);
+             });
+           });
+           console.log("photo saved");
         }
+
+        /*
+        This used to be for setting up the old canvas
 
         var context = this.canvas.interface.getContext("2d");
         this.canvas.interface.width = _width;
         this.canvas.interface.height = this._height;
-        context.drawImage(this.video.interface, 0, 0, _width, this._height);
+
+        context.drawImage(this.video.interface, 0, 0, _width, this._height);*/
 
         // Update the photo component with the snapped photo
-        this.photo.update();
+        /*
+        part of the original pattern to add data to the photo, but we're not
+        using a photo object right now
+        this.photo.update();*/
 
         // pattern from http://codepen.io/SitePoint/full/LVpNjp/
-        // $(function() {
 
-          //var Caman = require('caman').Caman;
-          var canvas = document.getElementById("canvas");  // canvas reference here
+          var canvas = document.getElementById("canvas");
+          /*resizing the canvas since default is 300*150*/
+          canvas.width = 320;
+          canvas.height = 240;
+          //var canvas = this.canvas;  // changed according to humphd
+          //var canvas2 = this.canvas;
           var ctx = canvas.getContext('2d');
 
+          ctx.drawImage(this.video.interface, 0, 0, 320, 240); //new
+
+          //console.log("canvas object is: "+canvas + " other constructor is: "+canvas2);
+
           /* Enable Cross Origin Image Editing */
+          /* initial attempt to load image from polaroid preview image
+
           var img = new Image();
           img.crossOrigin = '';
           img.src = self.photo.data;
@@ -136,9 +148,8 @@ define(function (require, exports, module) {
             canvas.height = img.height;
             console.log("loaded width: " + img.width + " height " + img.height);
             ctx.drawImage(img, 0, 0, img.width, img.height);
-          }; // added missing semi-colon
+          }; */
 
-          var filtered = false;
           var $reset = $('#resetbtn');
           var $pinhole = $('#pinholebtn');
           var $contrast = $('#contrastbtn');
@@ -149,60 +160,52 @@ define(function (require, exports, module) {
           var $glowingSun = $('#glowingsunbtn');
           $reset.on('click', function(e) {
             $('input[type=range]').val(0);
-            Caman('#canvas', img, function() { // canvas reference here
+            Caman(canvas, function() {
               this.revert(false);
               this.render();
-              filtered = false;
               console.log("reset");
             });
           });
           /* Filters */
           $pinhole.on('click', function(e) {
-            Caman('#canvas', img, function() { // canvas reference here
+            Caman(canvas, function() { // canvas id reference here to enable scrolling
               this.pinhole().render();
-              filtered = true;
               console.log("filtered: pinhole");
             });
           });
           $contrast.on('click', function(e) {
-            Caman('#canvas', img, function() {
+            Caman(canvas, function() {
               this.contrast(10).render();
-              filtered = true;
               console.log("filtered: contrast");
             });
           });
           $sepia.on('click', function(e) {
-            Caman('#canvas', img, function() {
+            Caman(canvas, function() {
               this.sepia(20).render();
-              filtered = true;
               console.log("filtered: sepia");
             });
           });
           $vintage.on('click', function(e) {
-            Caman('#canvas', img, function() {
+            Caman(canvas, function() {
               this.vintage().render();
-              filtered = true;
               console.log("filtered: vintage");
             });
           });
           $emboss.on('click', function(e) {
-            Caman('#canvas', img, function() {
+            Caman(canvas, function() {
               this.emboss().render();
-              filtered = true;
               console.log("filtered: emboss");
             });
           });
           $sunrise.on('click', function(e) {
-            Caman('#canvas', img, function() {
+            Caman(canvas, function() {
               this.sunrise().render();
-              filtered = true;
               console.log("filtered: sunrise");
             });
           });
           $glowingSun.on('click', function(e) {
-            Caman('#canvas', img, function() {
+            Caman(canvas, function() {
               this.glowingSun().render();
-              filtered = true;
               console.log("filtered: glowing sun");
             });
           });
