@@ -29,7 +29,57 @@
         </div>
         <div class="image">
             <div class="image-scale"></div>
-            <img class="image-preview" src="{{imgUrl}}">
+            <img class="image-preview" src="{{imgUrl}}" id="image-canvas">
+            <canvas id="temp-canvas"></canvas>
+            <div id="filter-container">
+              <table id="filter-table">
+                <tr>
+                  <div id="filter-list">
+                    <table>
+                      <tr>
+                      <th rowspan="2">
+                          Filters
+                              </th>
+                              <td>
+                                <button id="pinholebtn" value="pinhole" class="btn btn-primary">Pin Hole</button>
+                              </td>
+                              <td>
+                                <button id="sepiabtn" value="sepia" class="btn btn-primary">Sepia</button>
+                              </td>
+                              <td>
+                                <button id="contrastbtn" value="contrast" class="btn btn-primary">Contrast</button>
+                              </td>
+                              <td>
+                                <button id="vintagebtn" value="vintage" class="btn btn-primary">Vintage</button>
+                              </td>
+                              <td rowspan="2">
+                                <button id="savebtn" class="btn btn-success">Save Image</button>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <button id="sunrisebtn" value="sunrise" class="btn btn-primary">Sun Rise</button>
+                              </td>
+                              <td>
+                                <button id="embossbtn" value="emboss" class="btn btn-primary">Emboss</button>
+                              </td>
+                              <td>
+                                <button id="glowingsunbtn" value="glowingSun" class="btn btn-primary">Glow Sun</button>
+                              </td>
+                              <td>
+                                <button id="resetbtn" class="btn btn-success">Reset</button>
+                              </td>
+                            </tr>
+                          </table>
+                        </tr>
+                    </table>
+                  </div>
+            </div>
         </div>
-    </div>
+
 </div>
+
+
+</div>
+<script type="text/javascript" src="/src/thirdparty/caman/caman.full.min.js"></script>
+<script type="text/javascript" src="/src/thirdparty/caman/instagram.js"></script>
