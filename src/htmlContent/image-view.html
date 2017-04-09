@@ -29,7 +29,8 @@
         </div>
         <div class="image">
             <div class="image-scale"></div>
-            <img class="image-preview" src="{{imgUrl}}" id="image-canvas">
+            <!--hard code the image width and height until we change the css-->
+            <img class="image-preview" src="{{imgUrl}}" width="0" height="0" id="image-canvas">
             <canvas id="temp-canvas"></canvas>
             <div id="filter-container">
               <table id="filter-table">
@@ -82,4 +83,4 @@
 
 </div>
 <script type="text/javascript" src="/src/thirdparty/caman/caman.full.min.js"></script>
-<script type="text/javascript" src="/src/thirdparty/caman/instagram.js"></script>
+<script type="text/javascript" src="/src/thirdparty/caman/filters.js"></script>
