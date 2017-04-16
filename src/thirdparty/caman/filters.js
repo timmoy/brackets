@@ -10,15 +10,22 @@ $(function() {
         Caman(canvas, function () {
             this.render(function () {
                 var image = this.toBase64();
+                console.log("image: " + image);
                 var binaryDataStr = /^data:image\/png;base64,(.+)/.exec(image)[1];
                 //self.camera.savePhoto(base64ToBuffer(binaryDataStr));
+                console.log("binary data str: " + binaryDataStr);
                 var binary = window.atob(binaryDataStr);
+                console.log("binary: " + binary);
                 var len = binary.length;
+                console.log("len: " + len);
                 var bytes = new Uint8Array(len);
+                console.log("New bytes: " + bytes);
                 for(var i = 0; i < len; i++) {
                     bytes[i] = binary.charCodeAt(i);
                 }
+                console.log("Processed bytes: " + bytes);
                 var data = new Buffer(bytes.buffer);
+                console.log("Data: " + data);
                 fs.writeFile(savePath, data, {encoding: null}, function(err) {
                     if(err) {
                         return self.fail(err);
