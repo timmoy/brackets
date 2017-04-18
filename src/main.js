@@ -39,12 +39,18 @@ require.config({
 
         // In various places in the code, it's useful to know if this is a dev vs. prod env.
         // See Gruntfile for prod override of this to config.prod.js.
-        "envConfig"         : "bramble/config/config.dev"
+        "envConfig"         : "bramble/config/config.dev",
+        "caman"             : "thirdparty/caman/caman.full.min"
     },
     map: {
         "*": {
             "thirdparty/CodeMirror2": "thirdparty/CodeMirror",
             "thirdparty/react":       "react"
+        }
+    },
+    shim: {
+        "caman": {
+            exports: "Caman"
         }
     }
 });
