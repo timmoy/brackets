@@ -17,6 +17,7 @@ define(function (require, exports, module) {
 
     var fs              = BracketsFiler.fs(),
         Path            = BracketsFiler.Path,
+        Buffer          = BracketsFiler.Buffer,
         watchers        = {};
 
     // We currently do *not* do write consistency checks, since only a single instance
@@ -429,6 +430,19 @@ define(function (require, exports, module) {
         callback();
     }
 
+    // Based on http://stackoverflow.com/questions/21797299/convert-base64-string-to-arraybuffer
+    // Converts a base64 string representation of binary data to a Buffer
+    function base64ToBuffer(base64Str) {
+        var binary = window.atob(base64Str);
+        var len = binary.length;
+        var bytes = new window.Uint8Array(len);
+        for(var i = 0; i < len; i++) {
+            bytes[i] = binary.charCodeAt(i);
+        }
+
+        return new Buffer(bytes.buffer);
+    }
+
     // Export public API
     exports.showOpenDialog  = showOpenDialog;
     exports.showSaveDialog  = showSaveDialog;
@@ -445,6 +459,7 @@ define(function (require, exports, module) {
     exports.watchPath       = watchPath;
     exports.unwatchPath     = unwatchPath;
     exports.unwatchAll      = unwatchAll;
+    exports.base64ToBuffer  = base64ToBuffer;
 
     exports.recursiveWatch    = true;
     exports.normalizeUNCPaths = false;
