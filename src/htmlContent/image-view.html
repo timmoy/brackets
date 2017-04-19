@@ -30,56 +30,18 @@
         <div class="image">
             <div class="image-scale"></div>
             <img class="image-preview" src="{{imgUrl}}">
-            <div id="filter-container">
-              <table id="filter-table">
-                <tr>
-                  <div id="filter-list">
-                    <table>
-                      <tr>
-                      <th rowspan="2">
-                          Filters
-                              </th>
-                              <td>
-                                <button id="pinholebtn" value="pinhole" class="btn btn-primary">Pin Hole</button>
-                              </td>
-                              <td>
-                                <button id="sepiabtn" value="sepia" class="btn btn-primary">Sepia</button>
-                              </td>
-                              <td>
-                                <button id="contrastbtn" value="contrast" class="btn btn-primary">Contrast</button>
-                              </td>
-                              <td>
-                                <button id="vintagebtn" value="vintage" class="btn btn-primary">Vintage</button>
-                              </td>
-                              <td rowspan="2">
-                                <button id="savebtn" class="btn btn-success">Save Image</button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <button id="sunrisebtn" value="sunrise" class="btn btn-primary">Sun Rise</button>
-                              </td>
-                              <td>
-                                <button id="embossbtn" value="emboss" class="btn btn-primary">Emboss</button>
-                              </td>
-                              <td>
-                                <button id="glowingsunbtn" value="glowingSun" class="btn btn-primary">Glow Sun</button>
-                              </td>
-                              <td>
-                                <button id="resetbtn" class="btn btn-success">Reset</button>
-                              </td>
-                            </tr>
-                          </table>
-                        </tr>
-                    </div>
-                </table>
-
+            <h3>{{Strings.IMAGE_FILTER}}</h3>
+            <div class="image-filters">
+                <button class="btn btn-pinhole">{{Strings.IMAGE_FILTER_PINHOLE}}</button>
+                <button class="btn btn-sepia">{{Strings.IMAGE_FILTER_SEPIA}}</button>
+                <button class="btn btn-contrast">{{Strings.IMAGE_FILTER_CONTRAST}}</button>
+                <button class="btn btn-vintage">{{Strings.IMAGE_FILTER_VINTAGE}}</button>
+                <button class="btn btn-sunrise">{{Strings.IMAGE_FILTER_SUNRISE}}</button>
+                <button class="btn btn-emboss">{{Strings.IMAGE_FILTER_EMBOSS}}</button>
+                <button class="btn btn-glowing-sun">{{Strings.IMAGE_FILTER_GLOWING_SUN}}</button>
             </div>
+            <button class="btn btn-image-filter-save" disabled="disabled">{{Strings.IMAGE_SAVE_WITH_FILTERS}}</button>
+            <button class="btn btn-image-filter-reset" disabled="disabled">{{Strings.IMAGE_RESET_FILTERS}}</button>
         </div>
-
+    </div>
 </div>
-
-
-</div>
-<!--<script type="text/javascript" src="/src/thirdparty/caman/caman.full.min.js"></script>
-<script type="text/javascript" src="/src/thirdparty/caman/filters.js"></script>-->
