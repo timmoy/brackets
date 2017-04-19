@@ -38,6 +38,9 @@ define(function (require, exports, module) {
         Mustache            = require("thirdparty/mustache/mustache"),
         Image               = require("editor/image");
 
+    // Vibrant doesn't seem to play well with requirejs AMD loading, load it globally.
+    require("thirdparty/Vibrant");
+
     // XXXBramble specific bits to allow opening SVG as a regular image vs. XML doc
     var PreferencesManager  = require("preferences/PreferencesManager");
     PreferencesManager.definePreference("openSVGasXML", "boolean", false);
@@ -95,7 +98,10 @@ define(function (require, exports, module) {
      */
     function ImageView(file, $container) {
         this.file = file;
-        this.$el = $(Mustache.render(ImageViewTemplate, {imgUrl: _getImageUrl(file)}));
+        this.$el = $(Mustache.render(ImageViewTemplate, {
+            imgUrl: _getImageUrl(file),
+            Strings: Strings
+        }));
 
         $container.append(this.$el);
 
@@ -115,7 +121,7 @@ define(function (require, exports, module) {
         this.$imagePath.text(this.relPath).attr("title", this.relPath);
         this.$imagePreview.on("load", _.bind(this._onImageLoaded, this));
 
-        Image.load(this.$imagePreview[0]);
+        Image.load(this.$imagePreview[0], file.fullPath);
 
         _viewers[file.fullPath] = this;
     }
@@ -317,7 +323,7 @@ define(function (require, exports, module) {
      * Refreshes the image preview with what's on disk
      */
     ImageView.prototype.refresh = function () {
-        // Update the DOM node with the src URL
+        // Update the DOM node with the src URL 
         this.$imagePreview.attr("src", _getImageUrl(this.file));
     };
 
@@ -386,7 +392,6 @@ define(function (require, exports, module) {
             return _createImageView(file, pane);
         }
     });
-
 
     /*
      * This is for extensions that want to create a
