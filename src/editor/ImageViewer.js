@@ -42,10 +42,6 @@ define(function (require, exports, module) {
     // Vibrant doesn't seem to play well with requirejs AMD loading, load it globally.
     require("thirdparty/Vibrant");
 
-    // XXXBramble specific bits to allow opening SVG as a regular image vs. XML doc
-    var PreferencesManager  = require("preferences/PreferencesManager");
-    PreferencesManager.definePreference("openSVGasXML", "boolean", false);
-
     var _viewers = {};
 
     var _slice = Function.prototype.call.bind(Array.prototype.slice);
@@ -159,8 +155,7 @@ define(function (require, exports, module) {
 
         var extension = FileUtils.getFileExtension(this.file.fullPath);
 
-        var stringFormat = Strings.IMAGE_DIMENSIONS;
-        var dimensionString = StringUtils.format(stringFormat, this._naturalWidth, this._naturalHeight);
+        var dimensionString = this._naturalWidth + " &times; " + this._naturalHeight + " " + Strings.UNIT_PIXELS;
 
         if (extension === "ico") {
             dimensionString += " (" + Strings.IMAGE_VIEWER_LARGEST_ICON + ")";
