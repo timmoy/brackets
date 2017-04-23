@@ -37,7 +37,7 @@ define(function (require, exports, module) {
         FileUtils           = require("file/FileUtils"),
         _                   = require("thirdparty/lodash"),
         Mustache            = require("thirdparty/mustache/mustache"),
-        Image               = require("editor/image");
+        Image               = require("editor/Image");
 
     // Vibrant doesn't seem to play well with requirejs AMD loading, load it globally.
     require("thirdparty/Vibrant");
