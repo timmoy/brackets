@@ -3,6 +3,7 @@ define(function (require, exports, module) {
 
     var Caman           = require("caman");
     var FilerFileSystem = require("fileSystemImpl");
+    var FileUtils       = require("filesystem/impls/filer/FilerUtils");
     var FileSystemCache = require("filesystem/impls/filer/FileSystemCache");
     var Path            = require("filesystem/impls/filer/BracketsFiler").Path;
     var mimeFromExt     = require("filesystem/impls/filer/lib/content").mimeFromExt;
@@ -21,7 +22,7 @@ define(function (require, exports, module) {
 
         $saveBtn.click(function() {
             var imageBase64Data = image.canvas.toDataURL(imageMimeType);
-            var data = FilerFileSystem.base64ToBuffer(imageDataRegex.exec(imageBase64Data)[1]);
+            var data = FileUtils.base64ToBuffer(imageDataRegex.exec(imageBase64Data)[1]);
 
             FilerFileSystem.writeFile(imagePath, data, {encoding: null}, function(err) {
                 if(err) {
