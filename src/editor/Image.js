@@ -13,11 +13,14 @@ define(function (require, exports, module) {
         var imageDataRegex = /base64,(.+)/;
         var $saveBtn = $(".btn-image-filter-save");
         var $resetBtn = $(".btn-image-filter-reset");
+        var $imageWrapper = $(".image-view .image-wrapper");
+        var processing = false;
 
         $resetBtn.click(function() {
             image.reset();
             $saveBtn.prop("disabled", true);
             $resetBtn.prop("disabled", true);
+            $(".image-filters .active-filter").removeClass("active-filter");
         });
 
         $saveBtn.click(function() {
@@ -41,12 +44,26 @@ define(function (require, exports, module) {
             });
         });
 
-        function applyFilterFn(fnName, args) {
-            image.reset();
-            image[fnName].apply(image, args);
-            image.render();
+        function finishedProcessing(){
+            processing = false;
+            $imageWrapper.removeClass("processing");
             $saveBtn.prop("disabled", false);
             $resetBtn.prop("disabled", false);
+        }
+
+        function applyFilterFn(fnName, args) {
+            if(processing){
+              return;
+            }
+            $imageWrapper.addClass("processing");
+            processing = true;
+            image.reset();
+            image[fnName].apply(image, args);
+            image.render(function(){
+              finishedProcessing();
+            });
+            $saveBtn.prop("disabled", true);
+            $resetBtn.prop("disabled", true);
         }
 
         /* Filters */
@@ -71,6 +88,11 @@ define(function (require, exports, module) {
         $(".btn-glowing-sun").click(function() {
             applyFilterFn("glowingSun");
         });
+
+        $(".image-filters").on("click",".btn",function(){
+          $(".image-filters .active-filter").removeClass("active-filter");
+          $(this).addClass("active-filter");
+        })
     }
 
     exports.load = function(imageElement, imagePath) {
