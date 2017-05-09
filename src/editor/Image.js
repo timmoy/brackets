@@ -26,6 +26,7 @@ define(function (require, exports, module) {
         $saveBtn.click(function() {
             var imageBase64Data = image.canvas.toDataURL(imageMimeType);
             var data = FilerUtils.base64ToBuffer(imageDataRegex.exec(imageBase64Data)[1]);
+            $(".image-filters .active-filter").removeClass("active-filter");
 
             FilerFileSystem.writeFile(imagePath, data, {encoding: null}, function(err) {
                 if(err) {
