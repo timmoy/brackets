@@ -93,7 +93,7 @@ define(function (require, exports, module) {
         $(".image-filters").on("click",".btn",function(){
           $(".image-filters .active-filter").removeClass("active-filter");
           $(this).addClass("active-filter");
-        })
+        });
     }
 
     exports.load = function(imageElement, imagePath) {
