@@ -46,7 +46,6 @@ define(function (require, exports, module) {
 
         function applyFilterFn(fnName, args) {
             if(processing){
-              console.log("rejected filter " + fnName);
               return;
             }
             $imageWrapper.addClass("processing");
@@ -58,7 +57,6 @@ define(function (require, exports, module) {
             });
             $saveBtn.prop("disabled", true);
             $resetBtn.prop("disabled", true);
-            console.log("applied filter " + fnName);
         }
 
         /* Filters */
