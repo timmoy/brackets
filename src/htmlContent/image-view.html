@@ -29,7 +29,12 @@
         </div>
         <div class="image">
             <div class="image-scale"></div>
-            <img class="image-preview" src="{{imgUrl}}">
+          <div class="image-wrapper">
+              <img class="image-preview" src="{{imgUrl}}">
+              <div class="processing-overlay">
+                <div class="processing-spinner"></div>
+              </div>
+            </div>
             <h3>{{Strings.IMAGE_FILTERS_TITLE}}</h3>
             <div class="image-filters">
                 <button class="btn btn-pinhole">{{Strings.IMAGE_FILTER_PINHOLE}}</button>

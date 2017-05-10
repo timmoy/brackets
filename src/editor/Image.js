@@ -13,6 +13,8 @@ define(function (require, exports, module) {
         var imageDataRegex = /base64,(.+)/;
         var $saveBtn = $(".btn-image-filter-save");
         var $resetBtn = $(".btn-image-filter-reset");
+        var $imageWrapper = $(".image-view .image-wrapper");
+        var processing = false;
 
         $resetBtn.click(function() {
             image.reset();
@@ -35,12 +37,28 @@ define(function (require, exports, module) {
             });
         });
 
-        function applyFilterFn(fnName, args) {
-            image.reset();
-            image[fnName].apply(image, args);
-            image.render();
+        function finishedProcessing(){
+            processing = false;
+            $imageWrapper.removeClass("processing");
             $saveBtn.prop("disabled", false);
             $resetBtn.prop("disabled", false);
+        }
+
+        function applyFilterFn(fnName, args) {
+            if(processing){
+              console.log("rejected filter " + fnName);
+              return;
+            }
+            $imageWrapper.addClass("processing");
+            processing = true;
+            image.reset();
+            image[fnName].apply(image, args);
+            image.render(function(){
+              finishedProcessing();
+            });
+            $saveBtn.prop("disabled", true);
+            $resetBtn.prop("disabled", true);
+            console.log("applied filter " + fnName);
         }
 
         /* Filters */
